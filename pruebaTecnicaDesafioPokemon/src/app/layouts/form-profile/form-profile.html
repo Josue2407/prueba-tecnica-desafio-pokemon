@@ -13,7 +13,7 @@
             <label for="multiple-ac-1">Pasatiempo favorito*</label>
         </p-floatlabel>
         <p-floatlabel variant="on">
-            <p-datepicker class="w-full" formControlName="birthday" inputId="on_date" showIcon iconDisplay="input" [readonlyInput]="true" [invalid]="isRequired('birthday')" (onSelect)="onBirthDateSelected($event)" />
+            <p-datepicker class="w-full" formControlName="birthday" dateFormat="dd/M/yy" inputId="on_date" showIcon iconDisplay="input" [readonlyInput]="true" [invalid]="isRequired('birthday')" (onSelect)="onBirthDateSelected($event)" />
             <label for="on_date">Cumpleaños*</label>
         </p-floatlabel>
         <p-floatlabel variant="on">

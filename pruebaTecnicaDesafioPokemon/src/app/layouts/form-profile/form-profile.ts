@@ -33,6 +33,7 @@ export class FormProfile implements OnInit {
   ngOnInit(): void {
     this.itemsAux = this.items
     this.createForm()
+    this.getData()
   }
 
   createForm() {
@@ -42,6 +43,19 @@ export class FormProfile implements OnInit {
       birthday: new FormControl('', [Validators.required]),
       documento: new FormControl('', [Validators.required])
     })
+  }
+
+  getData(){
+    const infoLocal = sessionStorage.getItem('infoUser')
+    if(infoLocal){
+      const datos = JSON.parse(infoLocal)
+      this.form.patchValue({
+        nombre: datos.nombre,
+        pasatiempo: datos.pasatiempo,
+        birthday: new Date(datos.birthday),
+        documento:datos.documento
+      })
+    }
   }
 
   search(event: AutoCompleteCompleteEvent){

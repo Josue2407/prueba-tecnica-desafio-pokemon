@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import {NgIcon, provideIcons} from '@ng-icons/core'
 import { tablerCloudUpload, tablerUser, tablerChevronLeft, tablerTrash } from '@ng-icons/tabler-icons';
 import { FlowStateService, FlowState } from '../../core/services/flow-state.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-profile',
   providers: [provideIcons({tablerUser, tablerCloudUpload, tablerChevronLeft, tablerTrash})],
-  imports: [NgIcon],
+  imports: [NgIcon, ButtonModule],
   templateUrl: './profile.html',
 })
 export class Profile {
@@ -47,5 +48,9 @@ export class Profile {
   getUserInfo(){
     const info = sessionStorage.getItem('infoUser')
     return JSON.parse(info ?? '')
+  }
+
+  editProfile(){
+    this.flowStateService.setState(this.flowState.Initial)
   }
 }

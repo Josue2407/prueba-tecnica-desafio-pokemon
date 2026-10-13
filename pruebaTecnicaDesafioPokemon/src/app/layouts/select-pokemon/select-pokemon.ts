@@ -37,11 +37,19 @@ export class SelectPokemon implements OnInit, OnDestroy {
     this.pokemonService.getFirstGeneration().pipe(takeUntil(this.destroy$)).subscribe({
       next:(data) => {
         this.pokemon.set(data);
+        this.getPreviousLocal()
       },
       error:()=> {
         this.error.set('No fue posible cargar los Pokémon. Intenta nuevamente.')
       }
     })
+  }
+
+  getPreviousLocal(){
+    const local = sessionStorage.getItem('selectedPokemonIds')
+    if(local){
+      this.selectedPokemon.set(JSON.parse(local))
+    }
   }
 
   isSelected(id: number): boolean {

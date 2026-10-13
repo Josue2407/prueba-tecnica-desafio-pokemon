@@ -16,3 +16,18 @@ export interface Pokemon {
   image: string;
   url: string;
 }
+
+export interface PokemonStat {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
+    url: string;
+  };
+}
+
+export interface PokemonDetail {
+  id: number;
+  name: string;
+  stats: PokemonStat[];
+}

@@ -6,6 +6,7 @@ import { map, Observable } from 'rxjs';
 import {
   Pokemon,
   PokemonApiResponse,
+  PokemonDetail,
 } from '../models/pokemon.interface';
 
 @Injectable({
@@ -35,5 +36,11 @@ export class PokemonService {
           })
         )
       );
+  }
+
+  getPokemonDetails(id: number): Observable<PokemonDetail> {
+    return this.http.get<PokemonDetail>(
+      `${this.apiUrl}/${id}`
+    );
   }
 }

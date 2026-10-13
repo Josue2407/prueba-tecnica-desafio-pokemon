@@ -1,7 +1,10 @@
 <div class="ml-8 mt-5 flex flex-row items-start">
+    @if(flowStateService.currentState() != flowState.Confirmation){
     <div class="text-sky-800 pt-1">
         <ng-icon name="tablerChevronLeft" size="24"></ng-icon>
     </div>
+    }
+
     <div class="flex flex-col gap-2">
         @if(flowStateService.currentState() == flowState.Initial){
             <p class="text-xl text-sky-800 font-bold"><span class="font-extrabold">¡Hola!</span> Configuremos tu perfil</p>
@@ -11,7 +14,10 @@
             <p class="text-xl text-sky-800 font-extrabold">¡Ya casi terminamos!</p>
             <span class="text-sm text-slate-500">Revisa la información, y completa lo solicitado.</span>
         }@else {
-            <p class="text-xl text-sky-800 font-extrabold">¡Hola {{getUserInfo().nombre}}!</p>
+            <div class="flex flex-row gap-5 mt-10">
+                <p class="text-xl text-sky-800 font-extrabold">¡Hola {{getUserInfo().nombre}}!</p>
+                <p-button label="Editar perfil" variant="outlined" styleClass="!border !border-2 !border-sky-900 !text-sky-900 !text-xs !w-30 !rounded-2xl" (onClick)="editProfile()"/>
+            </div>
         }
     </div>
 </div>
@@ -21,7 +27,7 @@
             <span class="text-lg text-slate-900">Im&#225;gen perfil</span>
         }
         @else if(flowStateService.currentState() == flowState.InformationSaved) {
-            <span class="text-lg text-sky-800">{{getUserInfo().nombre}}</span>
+            <span class="text-2xl text-sky-800 font-extrabold">{{getUserInfo().nombre}}</span>
         }
         @else {
             <span class="text-lg text-slate-900">Entrenador</span>
@@ -71,10 +77,12 @@
                     <span class="font-bold">Edad:</span>
                     <span>{{getUserInfo().edad}} años</span>
                 </div>
+                @if(getUserInfo().documento != '') {
                 <div class="w-full flex flex-row justify-between items-center">
-                    <span class="font-bold">DUI:</span>
-                    <span>{{getUserInfo().documento}}</span>
+                    <span class="font-bold">{{getUserInfo().edad > 17 ? 'DUI:' : 'Carnet:' }}</span>
+                    <span>{{ getUserInfo().documento }}</span>
                 </div>
+                }
             </div>
         }
     </div>
