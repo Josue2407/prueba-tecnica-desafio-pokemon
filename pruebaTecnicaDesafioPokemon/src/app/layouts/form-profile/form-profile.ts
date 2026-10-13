@@ -28,6 +28,8 @@ export class FormProfile implements OnInit {
   items:string[] = ['Jugar Fútbol','Jugar Basquetball','Jugar Tennis','Jugar Voleibol','Jugar Fifa','Jugar videojuegos']
   itemsAux:string[] = []
 
+  edad!: number
+
   ngOnInit(): void {
     this.itemsAux = this.items
     this.createForm()
@@ -66,6 +68,8 @@ export class FormProfile implements OnInit {
       age--;
     }
 
+    this.edad = age
+
     if (age >= 18) {
       this.mayorEdad = true
       this.form.controls['documento'].addValidators(Validators.required)
@@ -85,7 +89,8 @@ export class FormProfile implements OnInit {
       nombre: this.form.get('nombre')?.value,
       pasatiempo: this.form.get('pasatiempo')?.value,
       birthday: this.form.get('birthday')?.value,
-      documento: this.form.get('documento')?.value
+      documento: this.form.get('documento')?.value,
+      edad: this.edad
     }
 
     sessionStorage.setItem('infoUser',JSON.stringify(informacion))

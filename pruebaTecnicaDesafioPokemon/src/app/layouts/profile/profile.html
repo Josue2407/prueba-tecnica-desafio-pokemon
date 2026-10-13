@@ -3,13 +3,29 @@
         <ng-icon name="tablerChevronLeft" size="24"></ng-icon>
     </div>
     <div class="flex flex-col gap-2">
-        <p class="text-xl text-sky-800 font-bold"><span class="font-extrabold">¡Hola!</span> Configuremos tu perfil</p>
-        <span class="text-xs text-neutral-400">Queremos conocerte mejor.</span>
+        @if(flowStateService.currentState() == flowState.Initial){
+            <p class="text-xl text-sky-800 font-bold"><span class="font-extrabold">¡Hola!</span> Configuremos tu perfil</p>
+            <span class="text-sm text-slate-500">Queremos conocerte mejor.</span>
+        }
+        @else if(flowStateService.currentState() == flowState.InformationSaved){
+            <p class="text-xl text-sky-800 font-extrabold">¡Ya casi terminamos!</p>
+            <span class="text-sm text-slate-500">Revisa la información, y completa lo solicitado.</span>
+        }@else {
+            <p class="text-xl text-sky-800 font-extrabold">¡Hola {{getUserInfo().nombre}}!</p>
+        }
     </div>
 </div>
 <div class="w-full flex flex-col items-center justify-center mt-5">
     <div class="rounded-4xl bg-yellow-400 flex flex-col justify-center items-center gap-7 px-4 py-15 m-4 w-2/5">
-        <span class="text-lg text-slate-900">Im&#225;gen perfil</span>
+        @if(flowStateService.currentState() == flowState.Initial){
+            <span class="text-lg text-slate-900">Im&#225;gen perfil</span>
+        }
+        @else if(flowStateService.currentState() == flowState.InformationSaved) {
+            <span class="text-lg text-sky-800">{{getUserInfo().nombre}}</span>
+        }
+        @else {
+            <span class="text-lg text-slate-900">Entrenador</span>
+        }
         <div class="w-40 h-40 rounded-full border border-white border-10 bg-slate-100 text-slate-400 overflow-hidden flex items-center justify-center">
             @if (selectedImage == null) {
                 <ng-icon name="tablerUser" size="80" strokeWidth="1.5"></ng-icon>
@@ -28,21 +44,38 @@
             class="hidden"
             (change)="onImageSelected($event)"
             />
-        <div class="w-full bg-white rounded-lg flex flex-row justify-between p-4 text-sky-600 border border-dashed border-sky-600" [class]="selectedImage ? '' : 'hover:cursor-pointer'"
-            role="button"
-            tabindex="0" 
-            (click)="selectedImage ? null : fileInput.click()"
-            >
-            @if(selectedImage == null){
-                <span class="text-xs">Adjunta un foto</span>
-                <ng-icon name="tablerCloudUpload"></ng-icon>
-            }
-            @else {
-                <span class="text-xs">{{ selectedImage.name }}</span>
-                <div class="text-red-500 cursor-pointer" (click)="removeImagen($event)">
-                    <ng-icon name="tablerTrash"></ng-icon>
+        @if(flowStateService.currentState() == flowState.Initial){
+            <div class="w-full bg-white rounded-lg flex flex-row justify-between p-4 text-sky-600 border border-dashed border-sky-600" [class]="selectedImage ? '' : 'hover:cursor-pointer'"
+                role="button"
+                tabindex="0" 
+                (click)="selectedImage ? null : fileInput.click()"
+                >
+                @if(selectedImage == null){
+                    <span class="text-xs">Adjunta un foto</span>
+                    <ng-icon name="tablerCloudUpload"></ng-icon>
+                }
+                @else {
+                    <span class="text-xs">{{ selectedImage.name }}</span>
+                    <div class="text-red-500 cursor-pointer" (click)="removeImagen($event)">
+                        <ng-icon name="tablerTrash"></ng-icon>
+                    </div>
+                }
+            </div>
+        }@else {
+            <div class="w-full flex flex-col justify-start items-start px-5">
+                <div class="w-full flex flex-row justify-between items-center">
+                    <span class="font-bold">Pasatiempo:</span>
+                    <span>{{getUserInfo().pasatiempo[0]}}</span>
                 </div>
-            }
-        </div>
+                <div class="w-full flex flex-row justify-between items-center">
+                    <span class="font-bold">Edad:</span>
+                    <span>{{getUserInfo().edad}} años</span>
+                </div>
+                <div class="w-full flex flex-row justify-between items-center">
+                    <span class="font-bold">DUI:</span>
+                    <span>{{getUserInfo().documento}}</span>
+                </div>
+            </div>
+        }
     </div>
 </div>
