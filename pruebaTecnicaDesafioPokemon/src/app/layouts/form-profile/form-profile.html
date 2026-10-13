@@ -1,1 +1,27 @@
-<p>form-profile works!</p>
+<div class="flex flex-col w-full justify-start items-start">
+    <div class="flex flex-col mb-10 mt-24 w-1/2">
+        <p class="text-2xl text-sky-800">Tu informaci&#243;n</p>
+        <span class="text-sm text-neutral-400">Completa la siguiente informaci&#243;n para completar tu perfil</span>
+    </div>
+    <div [formGroup]="form" class="w-1/2 flex flex-col gap-5">
+        <p-floatlabel variant="on">
+            <input pInputText id="on_label" formControlName="nombre" autocomplete="off" class="w-full" [invalid]="isRequired('nombre')" />
+            <label for="on_label">Nombre*</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on">
+            <p-autocomplete class="w-full" formControlName="pasatiempo" inputId="multiple-ac-1" multiple fluid [suggestions]="items" [invalid]="isRequired('pasatiempo')" (completeMethod)="search($event)" />
+            <label for="multiple-ac-1">Pasatiempo favorito*</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on">
+            <p-datepicker class="w-full" formControlName="birthday" inputId="on_date" showIcon iconDisplay="input" [readonlyInput]="true" [invalid]="isRequired('birthday')" (onSelect)="onBirthDateSelected($event)" />
+            <label for="on_date">Cumpleaños*</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on">
+            <input class="w-full" pInputText id="on_label" formControlName="documento" autocomplete="off" [numberFormat]="mayorEdad" [invalid]="isRequired('documento')" />
+            <label for="on_label">{{ mayorEdad ? 'Documento*' : 'Carnet de Minoridad'}}</label>
+        </p-floatlabel>
+        <div class="w-full flex flex-col items-center">
+            <p-button label="Continuar" styleClass="!bg-sky-700 !w-48" (onClick)="submitInfo()"/>
+        </div>
+    </div>
+</div>

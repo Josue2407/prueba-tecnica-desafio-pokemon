@@ -1,1 +1,48 @@
-<p>profile works!</p>
+<div class="ml-8 mt-5 flex flex-row items-start">
+    <div class="text-sky-800 pt-1">
+        <ng-icon name="tablerChevronLeft" size="24"></ng-icon>
+    </div>
+    <div class="flex flex-col gap-2">
+        <p class="text-xl text-sky-800 font-bold"><span class="font-extrabold">¡Hola!</span> Configuremos tu perfil</p>
+        <span class="text-xs text-neutral-400">Queremos conocerte mejor.</span>
+    </div>
+</div>
+<div class="w-full flex flex-col items-center justify-center mt-5">
+    <div class="rounded-4xl bg-yellow-400 flex flex-col justify-center items-center gap-7 px-4 py-15 m-4 w-2/5">
+        <span class="text-lg text-slate-900">Im&#225;gen perfil</span>
+        <div class="w-40 h-40 rounded-full border border-white border-10 bg-slate-100 text-slate-400 overflow-hidden flex items-center justify-center">
+            @if (selectedImage == null) {
+                <ng-icon name="tablerUser" size="80" strokeWidth="1.5"></ng-icon>
+            }@else {
+            <img
+                [src]="imagePreview"
+                alt="Vista previa de la imagen seleccionada"
+                class="w-full h-full object-cover rounded-full"
+            />
+            }
+        </div>
+        <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            class="hidden"
+            (change)="onImageSelected($event)"
+            />
+        <div class="w-full bg-white rounded-lg flex flex-row justify-between p-4 text-sky-600 border border-dashed border-sky-600" [class]="selectedImage ? '' : 'hover:cursor-pointer'"
+            role="button"
+            tabindex="0" 
+            (click)="selectedImage ? null : fileInput.click()"
+            >
+            @if(selectedImage == null){
+                <span class="text-xs">Adjunta un foto</span>
+                <ng-icon name="tablerCloudUpload"></ng-icon>
+            }
+            @else {
+                <span class="text-xs">{{ selectedImage.name }}</span>
+                <div class="text-red-500 cursor-pointer" (click)="removeImagen($event)">
+                    <ng-icon name="tablerTrash"></ng-icon>
+                </div>
+            }
+        </div>
+    </div>
+</div>
